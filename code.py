@@ -1,5 +1,7 @@
 import argparse
 import webbrowser
+import os
+import sys
 
 def open_link(url):
     webbrowser.open_new_tab(url)
@@ -14,6 +16,7 @@ def main(*args):
         openTerm = args[0]
 
     if not openTerm:
+        print("Enter a valid url")
         sys.exit()
 
     open_link(openTerm)

@@ -39,8 +39,7 @@ def fetch_metadata(url):
     jsonData['map'].append({
         'url' : tempUrl,
         'meta_description' : tempDesc,
-        'author' : tempAuthor,
-        'title' : null
+        'author' : tempAuthor
     })
     writeToJSONFile(path, fileName, jsonData)
 

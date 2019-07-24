@@ -31,15 +31,20 @@ def fetch_metadata(url):
     for meta in metas:
         if 'name' in meta.attrs and meta.attrs['name'] == 'description':
             tempDesc = meta.attrs['content']
+            break
+        else:
+            tempDesc = "null"
+    
+    for meta in metas:
         if 'name' in meta.attrs and meta.attrs['name'] == 'author':
             tempAuthor = meta.attrs['content']
-        else :
+            break
+        else:
             tempAuthor = "null"
 
     jsonData['map'].append({
         'url' : tempUrl,
-        'meta_description' : tempDesc,
-        'author' : tempAuthor
+        'meta_description' : tempDesc
     })
     writeToJSONFile(path, fileName, jsonData)
 

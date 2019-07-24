@@ -18,6 +18,8 @@ def fetch_metadata(url):
     for meta in metas:
         if 'name' in meta.attrs and meta.attrs['name'] == 'description':
             print(meta.attrs['content'])
+        if 'name' in meta.attrs and meta.attrs['name'] == 'author':
+            print(meta.attrs['content'])
 
 def main(*args):
     if len(args) == 0:

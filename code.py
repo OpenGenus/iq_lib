@@ -21,7 +21,7 @@ def fetch_metadata(url):
     fileName = 'details'
     jsonData = {}
     jsonData['map'] = []
-    jsonData['map'].append({'url' : url})
+    tempUrl = url
     
     response = requests.get(url)
     soup = BeautifulSoup(response.text,"lxml")
@@ -30,12 +30,18 @@ def fetch_metadata(url):
 
     for meta in metas:
         if 'name' in meta.attrs and meta.attrs['name'] == 'description':
-            jsonData['map'].append({'meta_description' : meta.attrs['content']})
+            tempDesc = meta.attrs['content']
         if 'name' in meta.attrs and meta.attrs['name'] == 'author':
-            jsonData['map'].append({'author' : meta.attrs['content']})
+            tempAuthor = meta.attrs['content']
         else :
-            jsonData['map'].append({'author' : "null"})
+            tempAuthor = "null"
 
+    jsonData['map'].append({
+        'url' : tempUrl,
+        'meta_description' : tempDesc,
+        'author' : tempAuthor,
+        'title' : null
+    })
     writeToJSONFile(path, fileName, jsonData)
 
 def main(*args):

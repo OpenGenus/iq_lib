@@ -3,12 +3,25 @@ import webbrowser
 import os
 import sys
 import requests
+import json
 from bs4 import BeautifulSoup
 
 def open_link(url):
     webbrowser.open_new_tab(url)
 
+
+def writeToJSONFile(path, fileName, data):
+    filePathNameWithExt = './' + path + '/' + fileName + '.json'
+    with open(filePathNameWithExt, 'w') as fp:
+        json.dump(data, fp)
+
+
 def fetch_metadata(url):
+    path = ''
+    fileName = 'details'
+    jsonData = {}
+    jsonData['map'] = []
+    jsonData['map'].append({'url' : url})
     
     response = requests.get(url)
     soup = BeautifulSoup(response.text,"lxml")
@@ -17,9 +30,13 @@ def fetch_metadata(url):
 
     for meta in metas:
         if 'name' in meta.attrs and meta.attrs['name'] == 'description':
-            print(meta.attrs['content'])
+            jsonData['map'].append({'meta_description' : meta.attrs['content']})
         if 'name' in meta.attrs and meta.attrs['name'] == 'author':
-            print(meta.attrs['content'])
+            jsonData['map'].append({'author' : meta.attrs['content']})
+        else :
+            jsonData['map'].append({'author' : "null"})
+
+    writeToJSONFile(path, fileName, jsonData)
 
 def main(*args):
     if len(args) == 0:

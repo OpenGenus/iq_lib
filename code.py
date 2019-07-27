@@ -27,6 +27,7 @@ def fetch_metadata(url):
     soup = BeautifulSoup(response.text,"lxml")
 
     metas = soup.find_all('meta')
+    titles = soup.title.string
 
     for meta in metas:
         if 'name' in meta.attrs and meta.attrs['name'] == 'description':
@@ -41,6 +42,8 @@ def fetch_metadata(url):
             break
         else:
             tempAuthor = "null"
+
+    print(titles)
 
     jsonData['map'].append({
         'url' : tempUrl,

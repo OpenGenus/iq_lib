@@ -43,10 +43,9 @@ def fetch_metadata(url):
         else:
             tempAuthor = "null"
 
-    print(titles)
-
     jsonData['map'].append({
         'url' : tempUrl,
+        'title' : titles,
         'meta_description' : tempDesc,
         'author' : tempAuthor
     })

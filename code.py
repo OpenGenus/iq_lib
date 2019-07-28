@@ -5,16 +5,21 @@ import sys
 import requests
 import json
 from bs4 import BeautifulSoup
+import re
 
 def open_link(url):
     webbrowser.open_new_tab(url)
 
-
 def writeToJSONFile(path, fileName, data):
     filePathNameWithExt = './' + path + '/' + fileName + '.json'
-    with open(filePathNameWithExt, 'w') as fp:
+    with open(filePathNameWithExt, 'a+') as fp:
         json.dump(data, fp)
 
+def read_sitemap():
+    f = open("sitemap.xml").read();
+    locations = re.findall('<loc>(.*)</loc>', f)
+    for loc in locations:
+        fetch_metadata(loc)
 
 def fetch_metadata(url):
     path = ''
@@ -64,8 +69,14 @@ def main(*args):
         print("Enter a valid url")
         sys.exit()
 
+    f = open("sitemap.xml").read();
+    locations = re.findall('<loc>(.*)</loc>', f)
+    for loc in locations:
+        print(loc)
+
     open_link(openTerm)
-    fetch_metadata(openTerm)
+#    fetch_metadata(openTerm)
+    read_sitemap()
 
 if __name__ == "__main__":
     main()

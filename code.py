@@ -69,11 +69,6 @@ def main(*args):
         print("Enter a valid url")
         sys.exit()
 
-    f = open("sitemap.xml").read();
-    locations = re.findall('<loc>(.*)</loc>', f)
-    for loc in locations:
-        print(loc)
-
     open_link(openTerm)
 #    fetch_metadata(openTerm)
     read_sitemap()

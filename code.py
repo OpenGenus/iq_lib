@@ -25,7 +25,7 @@ def read_sitemap():
     locations = re.findall('<loc>(.*)</loc>', f)
     for loc in locations:
         fetch_metadata(loc, jsonData)
-        writeToJSONFile(path, fileName, jsonData)
+    writeToJSONFile(path, fileName, jsonData)
 
 def fetch_metadata(url, jsonData):
     

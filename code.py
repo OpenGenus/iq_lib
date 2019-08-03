@@ -16,16 +16,19 @@ def writeToJSONFile(path, fileName, data):
         json.dump(data, fp)
 
 def read_sitemap():
-    f = open("sitemap.xml").read();
-    locations = re.findall('<loc>(.*)</loc>', f)
-    for loc in locations:
-        fetch_metadata(loc)
-
-def fetch_metadata(url):
     path = ''
     fileName = 'details'
     jsonData = {}
     jsonData['map'] = []
+
+    f = open("sitemap.xml").read();
+    locations = re.findall('<loc>(.*)</loc>', f)
+    for loc in locations:
+        fetch_metadata(loc, jsonData)
+        writeToJSONFile(path, fileName, jsonData)
+
+def fetch_metadata(url, jsonData):
+    
     tempUrl = url
     
     response = requests.get(url)
@@ -54,7 +57,7 @@ def fetch_metadata(url):
         'meta_description' : tempDesc,
         'author' : tempAuthor
     })
-    writeToJSONFile(path, fileName, jsonData)
+    return jsonData
 
 def main(*args):
     if len(args) == 0:

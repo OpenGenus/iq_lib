@@ -16,6 +16,7 @@ def writeToJSONFile(path, fileName, data):
         json.dump(data, fp)
 
 def read_sitemap():
+
     path = ''
     fileName = 'details'
     jsonData = {}
@@ -73,7 +74,6 @@ def main(*args):
         sys.exit()
 
     open_link(openTerm)
-#    fetch_metadata(openTerm)
     read_sitemap()
 
 if __name__ == "__main__":

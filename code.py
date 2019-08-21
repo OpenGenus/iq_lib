@@ -81,10 +81,12 @@ def main(*args):
         for key in data['map']:
             t.insert(key['value'].lower(),key['key'])
 
-    #print(t.search("Nisarg"))
-    open_link(t.search(searchTerm.lower()))
-    read_sitemap()
+    if(t.search(searchTerm.lower())):
+        open_link(t.search(searchTerm.lower()))
+    else:
+        print("No articles found related to {} keyword".format(searchTerm))
 
+    read_sitemap()
 
 if __name__ == "__main__":
     main()

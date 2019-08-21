@@ -1,0 +1,25 @@
+{
+"map":
+	[
+		{
+			"value":"OpenGenus",
+			"key":"http://www.opengenus.org/"
+		},
+		{
+			"value":"Aditya",
+			"key":"http://www.opengenus.org/"
+		},
+		{
+			"value":"Nisarg",
+			"key":"https://iq.opengenus.org/author/nisarg/"
+		},
+		{
+			"value":"Machine",
+			"key":"https://iq.opengenus.org/tag/machine-learning/"
+		},
+		{
+			"value":"Learning",
+			"key":"https://iq.opengenus.org/tag/machine-learning/"
+		}	
+	]
+}

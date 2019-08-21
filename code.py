@@ -6,6 +6,7 @@ import requests
 import json
 from bs4 import BeautifulSoup
 import re
+from trie import Trie
 
 def open_link(url):
     webbrowser.open_new_tab(url)
@@ -63,18 +64,27 @@ def fetch_metadata(url):
 def main(*args):
     if len(args) == 0:
         parser = argparse.ArgumentParser()
-        parser.add_argument("--open", help="Open the url in a browser")
+        parser.add_argument("--search", help="Search the article accordingly")
         args = parser.parse_args()
-        openTerm = args.open
+        searchTerm = args.search
     else:
-        openTerm = args[0]
+        searchTerm = args[0]
 
-    if not openTerm:
-        print("Enter a valid url")
+    if not searchTerm:
+        print("Enter a valid search Term")
         sys.exit()
 
-    open_link(openTerm)
+    t = Trie()
+
+    with open('data.json') as json_file:
+        data = json.load(json_file)
+        for key in data['map']:
+            t.insert(key['value'].lower(),key['key'])
+
+    #print(t.search("Nisarg"))
+    open_link(t.search(searchTerm.lower()))
     read_sitemap()
+
 
 if __name__ == "__main__":
     main()

@@ -43,7 +43,7 @@ def read_sitemap():
     jsonData = {}
     jsonData['map'] = []
 
-    f = open("sitemap.xml").read();
+    f = open("sitemap_1.xml").read();
     locations = re.findall('<loc>(.*)</loc>', f)
     for loc in locations:
         tempUrl, titles, tempDesc, tempAuthor = fetch_metadata(loc)
@@ -96,6 +96,8 @@ def main(*args):
         print("Enter a valid search Term")
         sys.exit()
 
+    read_sitemap()
+
     t = Trie()
 
     with open('details.json') as json_file:
@@ -106,14 +108,13 @@ def main(*args):
             for word in new_list_desc:
                 t.insert(word,key['url'])
             for word in new_list_title:
-            	t.insert(word.key['url'])
+            	t.insert(word,key['url'])
 
     if(t.search(searchTerm.lower())):
         open_link(t.search(searchTerm.lower()))
     else:
         print("No articles found related to {} keyword".format(searchTerm))
 
-    read_sitemap()
 
 if __name__ == "__main__":
     main()

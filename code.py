@@ -102,8 +102,11 @@ def main(*args):
         data = json.load(json_file)
         for key in data['map']:
             new_list_desc = data_clean(key['meta_description'])
+            new_list_title = data_clean(key['title'])
             for word in new_list_desc:
                 t.insert(word,key['url'])
+            for word in new_list_title:
+            	t.insert(word.key['url'])
 
     if(t.search(searchTerm.lower())):
         open_link(t.search(searchTerm.lower()))

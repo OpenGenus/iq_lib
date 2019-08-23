@@ -54,7 +54,7 @@ def read_sitemap():
             'author' : tempAuthor
         })
 
-    #if not (os.path.exists('details.json')):
+    if not (os.path.exists('details.json')):
     	writeToJSONFile(path, fileName, jsonData)
 
 def fetch_metadata(url):

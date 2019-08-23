@@ -8,13 +8,33 @@ from bs4 import BeautifulSoup
 import re
 from trie import Trie
 
+import nltk
+nltk.download('punkt')
+nltk.download('stopwords')
+import string
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
 def open_link(url):
     webbrowser.open_new_tab(url)
 
 def writeToJSONFile(path, fileName, data):
     filePathNameWithExt = './' + path + '/' + fileName + '.json'
-    with open(filePathNameWithExt, 'a+') as fp:
+    with open(filePathNameWithExt, 'a') as fp:
         json.dump(data, fp)
+
+def data_clean(sentence):
+
+	tokens = word_tokenize(sentence)
+	tokens = [w.lower() for w in tokens]
+	
+	table = str.maketrans('', '', string.punctuation)
+	stripped = [w.translate(table) for w in tokens]
+	words = [word for word in stripped if word.isalpha()]
+
+	stop_words = set(stopwords.words('english'))
+	words = [w for w in words if not w in stop_words]
+	return words
 
 def read_sitemap():
 
@@ -33,7 +53,9 @@ def read_sitemap():
             'meta_description' : tempDesc,
             'author' : tempAuthor
         })
-    writeToJSONFile(path, fileName, jsonData)
+
+    #if not (os.path.exists('details.json')):
+    	writeToJSONFile(path, fileName, jsonData)
 
 def fetch_metadata(url):
     
@@ -76,10 +98,12 @@ def main(*args):
 
     t = Trie()
 
-    with open('data.json') as json_file:
+    with open('details.json') as json_file:
         data = json.load(json_file)
         for key in data['map']:
-            t.insert(key['value'].lower(),key['key'])
+            new_list_desc = data_clean(key['meta_description'])
+            for word in new_list_desc:
+                t.insert(word,key['url'])
 
     if(t.search(searchTerm.lower())):
         open_link(t.search(searchTerm.lower()))

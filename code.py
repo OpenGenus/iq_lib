@@ -43,7 +43,7 @@ def read_sitemap():
     jsonData = {}
     jsonData['map'] = []
 
-    f = open("sitemap_1.xml").read();
+    f = open("sitemap.xml").read();
     locations = re.findall('<loc>(.*)</loc>', f)
     for loc in locations:
         tempUrl, titles, tempDesc, tempAuthor = fetch_metadata(loc)
